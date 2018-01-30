@@ -60,7 +60,7 @@
 #include "pcdbug.h"
 
 #if defined(USE_GZIP_COMPR)
-#include "zlib/zlib.h"
+#include <zlib.h>
 #endif
 
 #define DEBUG_RTP 1       /**< \todo include detailed RTP debugging */

@@ -103,14 +103,6 @@ OBJS = \
        $(OBJDIR)\winpcap.obj  $(OBJDIR)\winmisc.obj   \
        $(OBJDIR)\packet32.obj
 
-
-ZLIB_OBJS = $(OBJDIR)\adler32.obj  $(OBJDIR)\compress.obj \
-            $(OBJDIR)\crc32.obj    $(OBJDIR)\gzio.obj     \
-            $(OBJDIR)\uncompr.obj  $(OBJDIR)\deflate.obj  \
-            $(OBJDIR)\trees.obj    $(OBJDIR)\zutil.obj    \
-            $(OBJDIR)\inflate.obj  $(OBJDIR)\infback.obj  \
-            $(OBJDIR)\inftrees.obj $(OBJDIR)\inffast.obj
-
 O = o
 
 PKT_STUB = pkt_stub.h
@@ -129,16 +121,10 @@ OBJDIR = djgpp
 OBJS := $(subst \,/,$(OBJS))
 OBJS := $(subst .obj,.o,$(OBJS))
 
-ZLIB_OBJS := $(subst \,/,$(ZLIB_OBJS))
-ZLIB_OBJS := $(subst .obj,.o,$(ZLIB_OBJS))
-
 all: $(PKT_STUB) $(TARGET)
 
-$(TARGET): $(OBJS) $(ZLIB_OBJS)
+$(TARGET): $(OBJS)
 	ar rs $@ $?
-
-$(ZLIB_OBJS):
-	$(MAKE) -f djgpp.mak -C zlib
 
 $(OBJDIR)/%.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
