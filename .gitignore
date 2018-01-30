@@ -1,3 +1,5 @@
 *.exe
 *.a
+*.o
+*.iS
 src/language.c
