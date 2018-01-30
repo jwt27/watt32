@@ -107,11 +107,14 @@ PKT_STUB = pkt_stub.h
 ########################################################################
 
 
-CC     = gcc
-CFLAGS = -O3 -std=gnu89 -I. -I../inc -W -Wall -fno-strength-reduce
+CC       = gcc
+CFLAGS  := -O3 -std=gnu89 -I. -I../inc -W -Wall -fno-strength-reduce $(CFLAGS)
 
-AS     = as
-ASFLAGS= --gdwarf2
+AS       = as
+ASFLAGS := --gdwarf2 $(ASFLAGS)
+
+AR       = ar
+
 TARGET = ../lib/libwatt.a
 OBJDIR = djgpp
 
@@ -121,7 +124,7 @@ OBJS := $(subst .obj,.o,$(OBJS))
 all: $(PKT_STUB) $(TARGET)
 
 $(TARGET): $(OBJS)
-	ar rs $@ $?
+	$(AR) rs $@ $?
 
 $(OBJDIR)/%.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
