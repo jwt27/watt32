@@ -1,7 +1,4 @@
 #
-# NB! THIS MAKEFILE WAS AUTOMATICALLY GENERATED FROM MAKEFILE.ALL.
-#     DO NOT EDIT.
-#
 # Makefile for Waterloo TCP/IP kernel
 #
 
@@ -111,10 +108,10 @@ PKT_STUB = pkt_stub.h
 
 
 CC     = gcc
-CFLAGS = -O2 -g -gcoff -I. -I../inc -W -Wall -fno-strength-reduce \
-         -ffast-math -std=gnu89 #-ffunction-sections -fomit-frame-pointer
+CFLAGS = -O3 -std=gnu89 -I. -I../inc -W -Wall -fno-strength-reduce
 
-AS     = as --gdwarf2
+AS     = as
+ASFLAGS= --gdwarf2
 TARGET = ../lib/libwatt.a
 OBJDIR = djgpp
 
@@ -131,7 +128,7 @@ $(OBJDIR)/%.o: %.c
 
 $(OBJDIR)/%.o: %.S
 	$(CC) -E $< > $(OBJDIR)/$*.iS
-	$(AS) $(OBJDIR)/$*.iS -o $@
+	$(AS) $(ASFLAGS) $(OBJDIR)/$*.iS -o $@
 
 $(OBJDIR)/chksum0.o:  chksum0.S
 $(OBJDIR)/cpumodel.o: cpumodel.S
