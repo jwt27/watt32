@@ -107,13 +107,13 @@ PKT_STUB = pkt_stub.h
 ########################################################################
 
 
-CC       = gcc
+CC      = i586-pc-msdosdjgpp-gcc
 CFLAGS  := -O3 -std=gnu89 -I. -I../inc -W -Wall -fno-strength-reduce $(CFLAGS)
 
-AS       = as
+AS      = i586-pc-msdosdjgpp-as
 ASFLAGS := --gdwarf2 $(ASFLAGS)
 
-AR       = ar
+AR      = i586-pc-msdosdjgpp-ar
 
 TARGET = ../lib/libwatt.a
 OBJDIR = djgpp
@@ -124,6 +124,7 @@ OBJS := $(subst .obj,.o,$(OBJS))
 all: $(PKT_STUB) $(TARGET)
 
 $(TARGET): $(OBJS)
+	mkdir -p ../lib/
 	$(AR) rs $@ $?
 
 $(OBJDIR)/%.o: %.c
