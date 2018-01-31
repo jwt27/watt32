@@ -30,5 +30,5 @@ $ git clone https://github.com/jwt27/watt32.git
 $ cd watt32/
 $ source /usr/local/djgpp/setenv
 $ make -j
+$ make install PREFIX=/usr/local/djgpp # (optional)
 ```
-
