@@ -143,7 +143,7 @@ language.c: language.l
 	flex -8 -o$@ $<
 
 clean:
-	rm -f $(TARGET) $(OBJDIR)/*.o $(OBJDIR)/*.iS # $(PKT_STUB)
+	rm -f $(TARGET) $(OBJDIR)/*.o $(OBJDIR)/*.iS
 	@echo Cleaning done
 
 -include djgpp/watt32.dep
@@ -156,10 +156,6 @@ doxygen:
 ########################################################################
 
 $(OBJDIR)/pcpkt.o: asmpkt.nas
-
-#$(PKT_STUB): asmpkt.nas
-#	../util/nasm32 -f bin -l asmpkt.lst -o asmpkt.bin asmpkt.nas
-#	../util/bin2c asmpkt.bin > $@
 
 ########################################################################
 
