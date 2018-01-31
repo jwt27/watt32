@@ -108,7 +108,7 @@ PKT_STUB = pkt_stub.h
 
 
 CC      = i586-pc-msdosdjgpp-gcc
-CFLAGS  := -O3 -std=gnu89 -I. -I../inc -W -Wall -fno-strength-reduce $(CFLAGS)
+CFLAGS  := -O3 -std=gnu89 -flto -I. -I../inc -W -Wall -fno-strength-reduce $(CFLAGS)
 
 AS      = i586-pc-msdosdjgpp-as
 ASFLAGS := --gdwarf2 $(ASFLAGS)
