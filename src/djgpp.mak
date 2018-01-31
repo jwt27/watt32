@@ -143,7 +143,7 @@ language.c: language.l
 	flex -8 -o$@ $<
 
 clean:
-	rm -f $(TARGET) $(OBJDIR)/*.o $(OBJDIR)/*.iS
+	rm -f $(TARGET) $(OBJDIR)/*.o $(OBJDIR)/*.iS language.c
 	@echo Cleaning done
 
 -include djgpp/watt32.dep
