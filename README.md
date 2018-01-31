@@ -3,9 +3,9 @@
 This is the Watt-32 TCP/IP library, modified to be built with a cross-compiler.
 All dependencies on non-portable tools have been removed, and some bugs have been fixed to allow building with modern versions of gcc (7.3.0+).
 
-# Installing:
+## Installing
 
-Make sure you have a cross-compiling toolchain installed.
+Make sure you have a cross-compiling toolchain installed:
 ```
 $ git clone https://github.com/jwt27/build-djgpp.git
 $ cd build-djgpp/
