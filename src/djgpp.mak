@@ -121,6 +121,8 @@ OBJDIR = djgpp
 OBJS := $(subst \,/,$(OBJS))
 OBJS := $(subst .obj,.o,$(OBJS))
 
+.PHONY: all clean doxygen install
+
 all: $(PKT_STUB) $(TARGET)
 
 $(TARGET): $(OBJS)
@@ -146,18 +148,12 @@ clean:
 
 -include djgpp/watt32.dep
 
-
-########################################################################
-
-
-########################################################################
-
-
 ########################################################################
 
 doxygen:
 	doxygen doxyfile
 
+########################################################################
 
 $(OBJDIR)/pcpkt.o: asmpkt.nas
 
@@ -165,4 +161,18 @@ $(OBJDIR)/pcpkt.o: asmpkt.nas
 #	../util/nasm32 -f bin -l asmpkt.lst -o asmpkt.bin asmpkt.nas
 #	../util/bin2c asmpkt.bin > $@
 
+########################################################################
+
+PREFIX := $(dir $(PREFIX))
+EXEC_PREFIX := $(if $(EXEC_PREFIX),$(EXEC_PREFIX),$(PREFIX)/i586-pc-msdosdjgpp)
+
+install: $(TARGET)
+ifeq ($(PREFIX),)
+	$(error Specify install directory with "PREFIX=/path/to/djgpp")
+else
+	mkdir -p $(PREFIX)/include
+	mkdir -p $(EXEC_PREFIX)/lib
+	cp -rf ../inc/* $(PREFIX)/include/
+	cp -f $(TARGET) $(EXEC_PREFIX)/lib/
+endif
 
