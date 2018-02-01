@@ -160,7 +160,7 @@ $(OBJDIR)/pcpkt.o: asmpkt.nas
 ########################################################################
 
 EXEC_PREFIX := $(if $(EXEC_PREFIX), $(EXEC_PREFIX), $(PREFIX)/i586-pc-msdosdjgpp)
-HEADERS=$(shell cd ../inc/ && find . -type f)
+HEADERS = $(shell cd ../inc/ && find . -type f)
 
 dir_exists = $(shell [ -d $(1) ] && echo $(1))
 define check_prefix
@@ -178,4 +178,4 @@ install: $(TARGET)
 uninstall:
 	$(call check_prefix)
 	-rm -f $(EXEC_PREFIX)/lib/libwatt.a
-	-for i in $(HEADERS); do rm -f $(PREFIX)/include/$$i; done
+	-for i in $(HEADERS); do diff $(PREFIX)/include/$$i ../inc/$$i > /dev/null && rm -f $(PREFIX)/include/$$i; done
