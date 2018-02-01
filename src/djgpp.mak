@@ -106,14 +106,15 @@ PKT_STUB = pkt_stub.h
 
 ########################################################################
 
+program_exists = $(shell which $(1) > /dev/null && echo $(1))
+pick_tool = $(or $(call program_exists, $(join i586-pc-msdosdjgpp-,$(1))), $(1))
 
-CC      = i586-pc-msdosdjgpp-gcc
+CC      := $(or $(shell echo $$CC), $(call pick_tool, gcc))
+AS      := $(or $(shell echo $$AS), $(call pick_tool, as))
+AR      := $(or $(shell echo $$AR), $(call pick_tool, ar))
+
 CFLAGS  := -O3 -std=gnu89 -flto -I. -I../inc -W -Wall -fno-strength-reduce $(CFLAGS)
-
-AS      = i586-pc-msdosdjgpp-as
 ASFLAGS := --gdwarf2 $(ASFLAGS)
-
-AR      = i586-pc-msdosdjgpp-ar
 
 TARGET = ../lib/libwatt.a
 OBJDIR = djgpp
