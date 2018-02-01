@@ -159,16 +159,19 @@ $(OBJDIR)/pcpkt.o: asmpkt.nas
 
 ########################################################################
 
-PREFIX := $(dir $(PREFIX))
-EXEC_PREFIX := $(if $(EXEC_PREFIX),$(EXEC_PREFIX),$(PREFIX)/i586-pc-msdosdjgpp)
+dir_exists = $(shell [ -d $(1) ] && echo $(1))
+
+EXEC_PREFIX := $(if $(EXEC_PREFIX), $(EXEC_PREFIX), $(PREFIX)/i586-pc-msdosdjgpp)
 
 install: $(TARGET)
-ifeq ($(PREFIX),)
+ifeq ($(call dir_exists, $(PREFIX)),)
 	$(error Specify install directory with "PREFIX=/path/to/djgpp")
-else
+endif
+ifeq ($(call dir_exists, $(EXEC_PREFIX)),)
+	$(error Invalid EXEC_PREFIX: $(EXEC_PREFIX))
+endif
 	mkdir -p $(PREFIX)/include
 	mkdir -p $(EXEC_PREFIX)/lib
 	cp -rf ../inc/* $(PREFIX)/include/
 	cp -f $(TARGET) $(EXEC_PREFIX)/lib/
-endif
 
