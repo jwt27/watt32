@@ -121,7 +121,7 @@ OBJDIR = djgpp
 OBJS := $(subst \,/,$(OBJS))
 OBJS := $(subst .obj,.o,$(OBJS))
 
-.PHONY: all clean doxygen install
+.PHONY: all clean doxygen install uninstall
 
 all: $(PKT_STUB) $(TARGET)
 
@@ -159,19 +159,23 @@ $(OBJDIR)/pcpkt.o: asmpkt.nas
 
 ########################################################################
 
-dir_exists = $(shell [ -d $(1) ] && echo $(1))
-
 EXEC_PREFIX := $(if $(EXEC_PREFIX), $(EXEC_PREFIX), $(PREFIX)/i586-pc-msdosdjgpp)
+HEADERS=$(shell cd ../inc/ && find . -type f)
+
+dir_exists = $(shell [ -d $(1) ] && echo $(1))
+define check_prefix
+  $(if $(call dir_exists, $(PREFIX)),, $(error Specify install directory with "PREFIX=/path/to/djgpp"))
+  $(if $(call dir_exists, $(EXEC_PREFIX)),, $(error Invalid EXEC_PREFIX: $(EXEC_PREFIX)))
+endef
 
 install: $(TARGET)
-ifeq ($(call dir_exists, $(PREFIX)),)
-	$(error Specify install directory with "PREFIX=/path/to/djgpp")
-endif
-ifeq ($(call dir_exists, $(EXEC_PREFIX)),)
-	$(error Invalid EXEC_PREFIX: $(EXEC_PREFIX))
-endif
+	$(call check_prefix)
 	mkdir -p $(PREFIX)/include
 	mkdir -p $(EXEC_PREFIX)/lib
 	cp -rf ../inc/* $(PREFIX)/include/
 	cp -f $(TARGET) $(EXEC_PREFIX)/lib/
 
+uninstall:
+	$(call check_prefix)
+	-rm -f $(EXEC_PREFIX)/lib/libwatt.a
+	-for i in $(HEADERS); do rm -f $(PREFIX)/include/$$i; done
