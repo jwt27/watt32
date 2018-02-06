@@ -160,7 +160,7 @@ $(OBJDIR)/pcpkt.o: asmpkt.nas
 
 ########################################################################
 
-EXEC_PREFIX := $(if $(EXEC_PREFIX), $(EXEC_PREFIX), $(PREFIX)/i586-pc-msdosdjgpp)
+EXEC_PREFIX := $(or $(EXEC_PREFIX), $(PREFIX)/i586-pc-msdosdjgpp)
 HEADERS = $(shell cd ../inc/ && find . -type f)
 
 dir_exists = $(shell [ -d $(1) ] && echo $(1))
@@ -171,12 +171,12 @@ endef
 
 install: $(TARGET)
 	$(call check_prefix)
-	mkdir -p $(PREFIX)/include
+	mkdir -p $(EXEC_PREFIX)/include
 	mkdir -p $(EXEC_PREFIX)/lib
-	cp -rf ../inc/* $(PREFIX)/include/
+	cp -rf ../inc/* $(EXEC_PREFIX)/include/
 	cp -f $(TARGET) $(EXEC_PREFIX)/lib/
 
 uninstall:
 	$(call check_prefix)
 	-rm -f $(EXEC_PREFIX)/lib/libwatt.a
-	-for i in $(HEADERS); do diff $(PREFIX)/include/$$i ../inc/$$i > /dev/null && rm -f $(PREFIX)/include/$$i; done
+	-for i in $(HEADERS); do diff $(EXEC_PREFIX)/include/$$i ../inc/$$i > /dev/null && rm -f $(EXEC_PREFIX)/include/$$i; done
